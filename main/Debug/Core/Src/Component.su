@@ -1,0 +1,11 @@
+Component.c:11:6:Khong	8	static
+Component.c:21:6:Mot	8	static
+Component.c:31:6:Hai	8	static
+Component.c:41:6:Ba	8	static
+Component.c:51:6:Bon	8	static
+Component.c:61:6:Nam	8	static
+Component.c:71:6:Sau	8	static
+Component.c:81:10:Bay	8	static
+Component.c:91:10:Tam	8	static
+Component.c:101:10:Chin	8	static
+Component.c:111:10:display7SEG	16	static
