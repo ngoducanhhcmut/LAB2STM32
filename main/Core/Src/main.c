@@ -19,7 +19,9 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "software_timer.h"
+#include "Component.h"
+#include "update7SEG.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -56,6 +58,8 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+const int MAX_LED = 4;
+int index_led = 0;
 
 /* USER CODE END 0 */
 
@@ -89,16 +93,35 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  setTimer1(100);
+  int counter = 0, bit = 0;
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+	  if(timer1_flag == 1){
+		  setTimer1(100);
+		  if(counter == 0){
+			  if(bit == 0){
+				  HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 0);
+				  bit = 1;
+			  }
+			  else{
+				  HAL_GPIO_WritePin(DOT_GPIO_Port, DOT_Pin, 1);
+				  bit = 0;
+			  }
+		  }
+		  if(counter++ == 1){
+			  counter = 0;
+		  }
+		  update7SEG(index_led++);
+		  if(index_led == 4){
+			  index_led = 0;
+		  }
+	  }
   }
   /* USER CODE END 3 */
 }
@@ -237,7 +260,11 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+int counter = 200;
+void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
+{
+	timerRun();
+}
 /* USER CODE END 4 */
 
 /**
